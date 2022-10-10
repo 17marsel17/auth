@@ -1,7 +1,4 @@
-<p>
-    <b>ID:</b>          <%= user.id %><br />
-    <b>Username:</b>    <%= user.username %><br />
-    <b>Name:</b>        <%= user.displayName %><br />
-    <b>Email:</b>       <%= user.email %><br />
-</p>
-<a href="/api/user/logout">Выйти</a>
+<p>ID: <%= user.id %></p>
+<p>First Name: <%= user.name.givenName %></p>
+<p>Last Name: <%= user.name.familyName %></p>
+<a href="/logout">Выйти</a>

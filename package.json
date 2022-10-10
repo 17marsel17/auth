@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index"
+    "start": "node src/index",
+    "dev": "node -r dotenv/config src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,10 @@
     "express-session": "^1.17.3",
     "mongoose": "^6.4.3",
     "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "passport-yandex": "^0.0.5"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.1"
   }
 }

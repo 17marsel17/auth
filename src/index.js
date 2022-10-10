@@ -1,5 +1,5 @@
 import express from 'express';
-import { PORT, MONGO_URL } from './config.js';
+import { PORT } from './config.js';
 import { router as userRouter } from './routes/userRouter.js';
 import { logger } from './middleware/logger.js';
 import { error } from './middleware/error.js';
@@ -8,8 +8,6 @@ import session from 'express-session';
 import passport from 'passport';
 import {initPassport} from './passport/init.js';
 import flash from 'connect-flash';
-
-mongoose.connect(MONGO_URL);
 
 const app = express();
 
@@ -31,13 +29,12 @@ app.use(flash());
 
 initPassport(passport);
 
-app.use('/api/user', userRouter);
+app.use('/', userRouter);
 
 app.use(error);
 
-async function start(PORT, MONGO_URL) {
+async function start(PORT) {
     try {
-        await mongoose.connect(MONGO_URL);
         app.listen(PORT, () => {
             console.log(`http://localhost:${PORT}`);
         });
@@ -46,4 +43,4 @@ async function start(PORT, MONGO_URL) {
     }
 }
 
-start(PORT, MONGO_URL);
+start(PORT);

@@ -3,13 +3,29 @@ import passport from 'passport';
 
 export const router = express.Router();
 
+router.get('/auth/yandex',
+    passport.authenticate('yandex'),
+    function (req, res) {
+    });
+
+router.get('',
+    (req, res) => {
+    res.render('index', {user: req.user})
+    })
+
+router.get('/auth/yandex/callback',
+    passport.authenticate('yandex', {failureRedirect: '/login'}),
+    function (req, res) {
+    res.redirect('/profile')
+    })
+
 router.get('/login', (req, res) => {
     res.render('login', {message: req.flash('message')});
 });
 
-router.get('/me', (req, res, next) => {
+router.get('/profile', (req, res, next) => {
     if (!req.isAuthenticated()) {
-        return res.redirect('api/user/login');
+        return res.redirect('/login');
     }
     next();
     },
@@ -18,21 +34,9 @@ router.get('/me', (req, res, next) => {
     }
 );
 
-router.post('/login', passport.authenticate('login', {
-        successRedirect: '/api/user/me',
-        failureRedirect: '/api/user/login',
-        failureFlash: true
-    })
-);
-
-router.get('/signup', (req, res) => {
-    res.render('signup', {message: req.flash('message')});
-})
-
-router.post('/signup',
-    passport.authenticate('signup', {
-        successRedirect: '/api/user/me',
-        failureRedirect: '/api/user/signup',
+router.post('/login', passport.authenticate('yandex', {
+        successRedirect: '/profile',
+        failureRedirect: '/login',
         failureFlash: true
     })
 );
@@ -42,6 +46,6 @@ router.get('/logout', (req, res, next) => {
         if (err) {
             return next(err);
         }
-        res.redirect('/api/user/login')
+        res.redirect('/login')
     })
 });
